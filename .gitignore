@@ -1,0 +1,28 @@
+#################################################
+## Remove files not part of ClashBot base code ##
+#################################################
+
+AllTowns/
+logs/
+Loots/
+COC Bot.exe
+config.ini
+License.txt
+Backup/
+
+######################
+## Windows detritus ##
+######################
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Mac crap
+.DS_Store

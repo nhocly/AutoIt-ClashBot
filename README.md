@@ -1,1 +1,1 @@
-# AutoIt-ClashBot
+# ClashBot
