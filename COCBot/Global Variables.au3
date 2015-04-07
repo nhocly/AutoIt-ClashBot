@@ -91,6 +91,7 @@ Global $checkDeadUseKing ;King attack settings
 Global $checkDeadUseQueen ;Queen attack settings
 Global $checkDeadUseClanCastle ; Use Clan Castle settings
 Global $checkDeadAttackTH ; Attack Outside Townhall settings
+Global $iSkillActivateCond ; Heroes ability timed or auto activated
 
 Global $deploySettings ;Method of deploy found in attack settings
 Global $icmbAlgorithm ;Algorithm to use when attacking
@@ -120,10 +121,11 @@ Global $itxtKingSkill ;Delay before activating King Skill
 Global $itxtQueenSkill ;Delay before activating Queen Skill
 Global $itxtSpellDarkStorage
 Global $SpellDarkStorage
+Global $ichkMultiLight
 Global $DELocation, $DElixx = 0, $DElixy = 0
 Global $LSpell
 Global $CreateSpell = True
-Global $ichkBoostRax1, $ichkBoostRax2, $ichkBoostRax3, $ichkBoostRax4, $ichkBoostKing, $ichkBoostQueen
+Global $ichkBoostRax1, $ichkBoostRax2, $ichkBoostRax3, $ichkBoostRax4, $ichkBoostKing, $ichkBoostQueen, $ichkBoostSpell
 
 ;Boosts Settings
 Global $BoostAll
@@ -200,6 +202,9 @@ Global $iTimeWall = 120
 Global $iTimeArch = 25
 Global $iTimeGoblin = 35
 Global $iTimeBarba = 20
+
+;Misc Settings
+Global $iSkillActivateCond
 
 ;General Settings
 Global $botPos[2] ; Position of bot used for Hide function

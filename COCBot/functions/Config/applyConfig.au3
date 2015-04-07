@@ -159,9 +159,9 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 	_GUICtrlComboBox_SetCurSel($cmbWaveDelay, $icmbWaveDelay)
 
 	If $iRandomspeedatk = 1 Then
-		GUICtrlSetState($Randomspeedatk, $GUI_CHECKED)
+		GUICtrlSetState($chkRandomSpeedAtk, $GUI_CHECKED)
 	Else
-		GUICtrlSetState($Randomspeedatk, $GUI_UNCHECKED)
+		GUICtrlSetState($chkRandomSpeedAtk, $GUI_UNCHECKED)
 	EndIf
 	Randomspeedatk()
 
@@ -265,10 +265,16 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 	Switch $iUseStorage
 		Case 0
 			GUICtrlSetState($UseGold, $GUI_CHECKED)
+			GUICtrlSetState($UseElixir, $GUI_UNCHECKED)
+			GUICtrlSetState($UseGoldElix, $GUI_UNCHECKED)
 		Case 1
 			GUICtrlSetState($UseElixir, $GUI_CHECKED)
+			GUICtrlSetState($UseGold, $GUI_UNCHECKED)
+			GUICtrlSetState($UseGoldElix, $GUI_UNCHECKED)
 		Case 2
 			GUICtrlSetState($UseGoldElix, $GUI_CHECKED)
+			GUICtrlSetState($UseGold, $GUI_UNCHECKED)
+			GUICtrlSetState($UseElixir, $GUI_UNCHECKED)
 	EndSwitch
 
 	GUICtrlSetData($txtWallMinGold, $itxtWallMinGold)
@@ -326,6 +332,11 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 	Else
 	   GUICtrlSetState($chkBoostQueen, $GUI_UNCHECKED)
 	EndIf
+    If $ichkBoostSpell = 1 Then
+	   GUICtrlSetState($chkBoostSpell, $GUI_CHECKED)
+	Else
+	   GUICtrlSetState($chkBoostSpell, $GUI_UNCHECKED)
+	EndIf
 	;General Settings--------------------------------------------------------------------------
 	If $frmBotPosX <> -32000 Then WinMove($sBotTitle, "", $frmBotPosX, $frmBotPosY)
 	GUICtrlSetData($txtMinimumTrophy, $itxtMinTrophy)
@@ -348,6 +359,12 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 		GUICtrlSetState($chkSpellDarkStorage, $GUI_CHECKED)
 	Else
 		GUICtrlSetState($chkSpellDarkStorage, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkMultiLight = 1 Then
+		GUICtrlSetState($chkMultiLight, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkMultiLight, $GUI_UNCHECKED)
 	EndIf
 
 	If $ichkBackground = 1 Then
@@ -383,67 +400,77 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 		GUICtrlSetState($chkDonateOnly, $GUI_UNCHECKED)
 	EndIf
 
+	;Misc
+	Switch $iSkillActivateCond
+	    Case 0
+			GUICtrlSetState($UseSkillAuto, $GUI_UNCHECKED)
+			GUICtrlSetState($UseSkillTimed, $GUI_CHECKED)
+		Case 1
+			GUICtrlSetState($UseSkillAuto, $GUI_CHECKED)
+			GUICtrlSetState($UseSkillTimed, $GUI_UNCHECKED)
+	EndSwitch
+
 	;Push Bullet
     If $PushBulletEnabled = 1 Then
-	   GUICtrlSetState($lblpushbulletenabled, $GUI_CHECKED)
+	   GUICtrlSetState($chkPushBulletEnabled, $GUI_CHECKED)
 	Else
-	   GUICtrlSetState($lblpushbulletenabled, $GUI_UNCHECKED)
+	   GUICtrlSetState($chkPushBulletEnabled, $GUI_UNCHECKED)
     EndIf
 
-	GUICtrlSetData($pushbullettokenvalue, $PushBullettoken)
+	GUICtrlSetData($txtPushBulletTokenValue, $PushBullettoken)
 
     If $PushBulletvillagereport = 1 Then
-	   GUICtrlSetState($lblvillagereport, $GUI_CHECKED)
+	   GUICtrlSetState($chkPushVillageReport, $GUI_CHECKED)
 	Else
-	   GUICtrlSetState($lblvillagereport, $GUI_UNCHECKED)
+	   GUICtrlSetState($chkPushVillageReport, $GUI_UNCHECKED)
     EndIf
 
     If $PushBulletmatchfound = 1 Then
-	   GUICtrlSetState($lblmatchfound, $GUI_CHECKED)
+	   GUICtrlSetState($chkPushMatchFound, $GUI_CHECKED)
 	Else
-	   GUICtrlSetState($lblmatchfound, $GUI_UNCHECKED)
+	   GUICtrlSetState($chkPushMatchFound, $GUI_UNCHECKED)
     EndIf
 
 	If $PushBulletlastraid = 1 Then
-	   GUICtrlSetState($lbllastraid, $GUI_CHECKED)
+	   GUICtrlSetState($chkPushLastRaid, $GUI_CHECKED)
 	Else
-	   GUICtrlSetState($lbllastraid, $GUI_UNCHECKED)
+	   GUICtrlSetState($chkPushLastRaid, $GUI_UNCHECKED)
     EndIf
 
 	If $PushBullettotalraid = 1 Then
-	   GUICtrlSetState($lbltotalraid, $GUI_CHECKED)
+	   GUICtrlSetState($chkPushTotalRaid, $GUI_CHECKED)
 	Else
-	   GUICtrlSetState($lbltotalraid, $GUI_UNCHECKED)
+	   GUICtrlSetState($chkPushTotalRaid, $GUI_UNCHECKED)
     EndIf
 
 	If $PushBulletdebug = 1 Then
-	   GUICtrlSetState($lblpushbulletdebug, $GUI_CHECKED)
+	   GUICtrlSetState($chkPushBulletDebug, $GUI_CHECKED)
 	Else
-	   GUICtrlSetState($lblpushbulletdebug, $GUI_UNCHECKED)
+	   GUICtrlSetState($chkPushBulletDebug, $GUI_UNCHECKED)
     EndIf
 
 	If $PushBulletremote = 1 Then
-	   GUICtrlSetState($lblpushbulletremote, $GUI_CHECKED)
+	   GUICtrlSetState($chkPushBulletRemote, $GUI_CHECKED)
 	Else
-	   GUICtrlSetState($lblpushbulletremote, $GUI_UNCHECKED)
+	   GUICtrlSetState($chkPushBulletRemote, $GUI_UNCHECKED)
     EndIf
 
     If $PushBulletdelete = 1 Then
-	   GUICtrlSetState($lblpushbulletdelete, $GUI_CHECKED)
+	   GUICtrlSetState($chkPushBulletDelete, $GUI_CHECKED)
 	Else
-	   GUICtrlSetState($lblpushbulletdelete, $GUI_UNCHECKED)
+	   GUICtrlSetState($chkPushBulletDelete, $GUI_UNCHECKED)
     EndIf
 
 	If $PushBulletbuilder = 1 Then
-	   GUICtrlSetState($lblfreebuilder, $GUI_CHECKED)
+	   GUICtrlSetState($chkPushFreeBuilder, $GUI_CHECKED)
 	Else
-	   GUICtrlSetState($lblfreebuilder, $GUI_UNCHECKED)
+	   GUICtrlSetState($chkPushFreeBuilder, $GUI_UNCHECKED)
     EndIf
 
     If $PushBulleterror = 1 Then
-	   GUICtrlSetState($lblerror, $GUI_CHECKED)
+	   GUICtrlSetState($chkPushError, $GUI_CHECKED)
 	Else
-	   GUICtrlSetState($lblerror, $GUI_UNCHECKED)
+	   GUICtrlSetState($chkPushError, $GUI_UNCHECKED)
 	EndIf
 
    Switch $PushBullettype
@@ -453,6 +480,6 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 			GUICtrlSetState($UseText, $GUI_CHECKED)
     EndSwitch
 
-	GUICtrlSetData($lblpushbulletintervalvalue, $PushBulletinterval)
-	GUICtrlSetData($lblpushbulletmessagesvalue, $PushBulletmessages)
+	GUICtrlSetData($txtPushBulletInterval, $PushBulletinterval)
+	GUICtrlSetData($txtPushBulletMessages, $PushBulletmessages)
 EndFunc   ;==>applyConfig

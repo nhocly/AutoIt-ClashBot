@@ -66,7 +66,20 @@ Func BoostAllBuilding()
 			BoostBuilding()
 		EndIf
 
-		If $BoostAll >= $ichkBoostRax1 + $ichkBoostRax2 + $ichkBoostRax3 + $ichkBoostRax4 + $ichkBoostKing + $ichkBoostQueen Then
+		If $ichkBoostSpell = 1 Then; Spell Factory
+			If $SFactoryPos[0] = "" Then
+				LocateSFactory()
+				SaveConfig()
+				If _Sleep(2000) Then Return
+				ClickP($TopLeftClient) ;Click Away
+			EndIf
+			SetLog("Boosting Spell Factory...", $COLOR_BLUE)
+			Click($SFactoryPos[0], $SFactoryPos[1]) ;Click Spell Factory
+			If _Sleep(500) Then Return
+			BoostBuilding()
+		EndIf
+
+		If $BoostAll >= $ichkBoostRax1 + $ichkBoostRax2 + $ichkBoostRax3 + $ichkBoostRax4 + $ichkBoostKing + $ichkBoostQueen + $ichkBoostSpell Then
 			_GUICtrlComboBox_SetCurSel($cmbBoostBarracks, (GUICtrlRead($cmbBoostBarracks) - 1))
 			SetLog("Boost remaining : " & GUICtrlRead($cmbBoostBarracks), $COLOR_GREEN)
 			$BoostAll = 0

@@ -67,7 +67,7 @@ Func VillageReport()
 		GUICtrlSetData($lblresulttrophystart, $TrophyCount)
 		$BuilderCountStart = $FreeBuilder
 	Else
-		If GUICtrlRead($lblpushbulletenabled) = $GUI_CHECKED and GUICtrlRead($lblfreebuilder) = $GUI_CHECKED Then
+		If GUICtrlRead($chkPushBulletEnabled) = $GUI_CHECKED and GUICtrlRead($chkPushFreeBuilder) = $GUI_CHECKED Then
 			If $FreeBuilder > $BuilderCountStart Then
 				_Push("Free Builder Available", "You have a free builder available")
 				SetLog("You have a free builder available")
@@ -88,7 +88,7 @@ Func VillageReport()
 			_PushFile($FileName, "loots", "image/jpeg", "Last Raid", $FileName)
 			$Raid = 0
 	    EndIf
-	    if $PushBulletEnabled = 1 and $PushBulletlastraid = 1 And $PushBullettype = 1 and $Raid = 1 Then
+	    if $PushBulletEnabled = 1 and $PushBulletlastraid = 1 And $PushBullettype = 1 and $Raid = 1 and $TakeLootSnapShot = 1 Then
 			_Push("Last Raid", "[G]: " & _NumberFormat($LastRaidGold) & " [E]: " & _NumberFormat($LastRaidElixir) & " [D]: " & _NumberFormat($LastRaidDarkElixir) & " [T]: " & $LastRaidTrophy)
 			SetLog("Push: Last Raid",$COLOR_GREEN)
 			$Raid = 0

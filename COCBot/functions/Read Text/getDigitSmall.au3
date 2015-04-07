@@ -123,6 +123,34 @@ Func getDigitSmall(ByRef $x, $y, $type)
 		EndIf
 	EndIf
 
+	;Search for digit 3 another version
+	$width = 8
+	Select
+		Case $type = "Camp"
+			Local $c1 = Hex(0xF9F9F9, 6), $c2 = Hex(0xE0E0E0, 6), $c3 = Hex(0x474747, 6)
+	EndSelect
+	Local $pixel1[3] = [$x + 6, $y + 1, $c1], $pixel2[3] = [$x + 3, $y + 8, $c2], $pixel3[3] = [$x + 4, $y + 10, $c3]
+	If boolPixelSearch($pixel1, $pixel2, $pixel3, 7) Then
+		$x += $width
+		Return 3
+	Else
+		$x -= 1
+		Local $pixel1[3] = [$x + 6, $y + 1, $c1], $pixel2[3] = [$x + 3, $y + 8, $c2], $pixel3[3] = [$x + 4, $y + 10, $c3]
+		If boolPixelSearch($pixel1, $pixel2, $pixel3, 7) Then
+			$x += $width
+			Return 3
+		Else
+			$x += 2
+			Local $pixel1[3] = [$x + 6, $y + 1, $c1], $pixel2[3] = [$x + 3, $y + 8, $c2], $pixel3[3] = [$x + 4, $y + 10, $c3]
+			If boolPixelSearch($pixel1, $pixel2, $pixel3, 7) Then
+				$x += $width
+				Return 3
+			Else
+				$x -= 1
+			EndIf
+		EndIf
+	EndIf
+
 	;Search for digit 4
 	For $i = 0 To 1
 		$width = 9

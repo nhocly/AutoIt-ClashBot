@@ -7,7 +7,7 @@
 #pragma compile(FileVersion, 5.7)
 #pragma compile(LegalCopyright, © The Bytecode Club)
 
-$sBotVersion = "6.0"
+$sBotVersion = "6.0.2 Beta"
 $sBotTitle = "AutoIt ClashBot v" & $sBotVersion
 
 If _Singleton($sBotTitle, 1) = 0 Then
@@ -27,9 +27,9 @@ If Not FileExists(@ScriptDir & "\License.txt") Then
 EndIf
 #include "_UskinLibrary.au3"
 _Uskin_LoadDLL()
-_USkin_Init(@ScriptDir & "\skins\dark0.msstyles")
+_USkin_Init(@ScriptDir & "\skins\orange.msstyles")
 #include "COCBot\Global Variables.au3"
-#include "COCBot\GUI Design.au3"
+#include "COCBot\GUI Form.au3"
 #include "COCBot\GUI Control.au3"
 #include "COCBot\Functions.au3"
 #include-once
@@ -196,7 +196,7 @@ Func AttackMain() ;Main control for attack functions
 	Attack()
 	$DCattack = 0
 	If _Sleep(1000) Then Return
-	ReturnHome()
+	ReturnHome($TakeLootSnapShot)
 	If _Sleep(1000) Then Return
 	$FirstStart = True ;Ensure camps get recalculated after battle
 EndFunc   ;==>AttackMain

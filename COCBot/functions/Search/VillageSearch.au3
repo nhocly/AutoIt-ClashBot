@@ -4,15 +4,6 @@ Global $AtkDeadEnabled, $AtkAnyEnabled
 Func VillageSearch() ;Control for searching a village that meets conditions
 	Local $skippedVillages
 	_WinAPI_EmptyWorkingSet(WinGetProcess($Title)) ; Reduce BlueStacks Memory Usage
-	#cs ; don't need to check shield twice - uncomment if there are problems
-		If _Sleep(1000, False) Then Return
-		_CaptureRegion() ; Check Break Shield button again
-		Local $offColors[3][3] = [[0x202C0D, 105, 0], [0x60B010, 30, 30], [0xFFFFFF, 20, 20]] ; 2nd pixel edge of button, 3rd pixel dark green of button, 4th pixel white of ok
-		Local $ShieldPixel = _MultiPixelSearch(480, 380, 586, 411, 1, 1, Hex(0xD0E878, 6), $offColors, 30) ; light green pixel of button
-		If IsArray($ShieldPixel) Then
-		Click($ShieldPixel[0], $ShieldPixel[1]);Click Okay To Break Shield
-		EndIf
-	#ce
 
 	$AtkDeadEnabled = False
 	$AtkAnyEnabled = False
@@ -69,7 +60,7 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 					GUICtrlSetData($lblresultsearchcost, GUICtrlRead($lblresultsearchcost)+ $SearchCost)
 				ElseIf _ColorCheck(_GetPixelColor(71, 530), Hex(0xC00000, 6), 20) Then
 					SetLog("Cannot locate Next button, try to return home...", $COLOR_RED)
-					if GUICtrlRead($lblpushbulletenabled) = $GUI_CHECKED and GUICtrlRead($lblerror) = $GUI_CHECKED Then
+					if GUICtrlRead($chkPushBulletEnabled) = $GUI_CHECKED and GUICtrlRead($chkPushError) = $GUI_CHECKED Then
 						_Push("Disconnected","Your bot got disconnected while searching for enemy..")
 				    EndIf
 					If _Sleep(500) Then Return
@@ -83,7 +74,7 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 					PrepareSearch()
 				Else
 					SetLog("Cannot locate Next button & Surrender button, Restarting Bot", $COLOR_RED)
-					if GUICtrlRead($lblpushbulletenabled) = $GUI_CHECKED and GUICtrlRead($lblerror) = $GUI_CHECKED Then
+					if GUICtrlRead($chkPushBulletEnabled) = $GUI_CHECKED and GUICtrlRead($chkPushError) = $GUI_CHECKED Then
 						_Push("Disconnected","Your bot got disconnected while searching for enemy..")
 				    EndIf
 					checkMainScreen()
@@ -97,7 +88,7 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 		GUICtrlSetData($lblresultsearchcost, GUICtrlRead($lblresultsearchcost)+ $SearchCost)
 		If GUICtrlRead($chkAlertSearch) = $GUI_CHECKED Then
 			TrayTip("Match Found!", "Gold: " & $searchGold & "; Elixir: " & $searchElixir & "; Dark: " & $searchDark & "; Trophy: " & $searchTrophy & "; Townhall: " & $searchTH & ", " & $THLoc, 0)
-			If GUICtrlRead($lblpushbulletenabled) = $GUI_CHECKED and GUICtrlRead($lblmatchfound) = $GUI_CHECKED Then
+			If GUICtrlRead($chkPushBulletEnabled) = $GUI_CHECKED and GUICtrlRead($chkPushMatchFound) = $GUI_CHECKED Then
 			   _Push("Match Found!", "[G]: " & _NumberFormat($searchGold) & "; [E]: " & _NumberFormat($searchElixir) & "; [D]: " & _NumberFormat($searchDark) & "; [T]: " & $searchTrophy  & "; [TH Lvl]: " & $searchTH & ", Loc: " & $THLoc )
 			   SetLog("Push: Match Found",$COLOR_GREEN)
 			EndIf

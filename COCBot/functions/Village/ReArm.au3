@@ -11,11 +11,11 @@ Func ReArm()
 	EndIf
 
 	ClickP($TopLeftClient) ; Click away
-	If _Sleep(1000) Then Return
+	If _Sleep(500) Then Return
 	Click($TownHallPos[0], $TownHallPos[1])
-	If _Sleep(1000) Then Return
+	If _Sleep(500) Then Return
 
-	Local $x1 = 240, $y1 = 563, $x2 = 670, $y2 = 600 ;Coordinates for button search
+	Local $x1 = 290, $y1 = 563, $x2 = 670, $y2 = 590 ;Coordinates for button search
 
 	;Traps
 	Local $offColors[3][3] = [[0x8B7E79, 26, 25], [0xE2C73A, 70, 7], [0x2B2D1F, 76, 0]] ; 2nd pixel brown wrench, 3rd pixel gold, 4th pixel edge of button

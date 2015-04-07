@@ -13,9 +13,7 @@ Func BoostBarracks()
 			ClickP($TopLeftClient) ;Click Away
 			If _Sleep(1000) Then ExitLoop
 			Click($barrackPos[0][0], $barrackPos[0][1])
-			If _Sleep(1000) Then ExitLoop
-			_CaptureRegion()
-			$Boost = _PixelSearch(410, 603, 493, 621, Hex(0xfffd70, 6), 10)
+			$Boost = _WaitForPixelSearch(410, 610, 493, 615, Hex(0xfffd70, 6), 10)
 			If IsArray($Boost) Then
 				Click($Boost[0], $Boost[1])
 				If _WaitForPixel(420, 375, Hex(0xd2ec78, 6), 20) Then

@@ -22,13 +22,10 @@ Func TrainDark()
 		If _Sleep(500) Then ExitLoop
 
 		ClickP($TopLeftClient) ;Click Away
-
 		If _Sleep(500) Then ExitLoop
-
 		Click($DarkBarrackPos[$i][0], $DarkBarrackPos[$i][1]) ;Click Dark Barrack
-		If _Sleep(500) Then ExitLoop
 
-		Local $TrainPos = _PixelSearch(155, 603, 694, 605, Hex(0x603818, 6), 5) ;Finds Train Troops button
+		Local $TrainPos = _WaitForPixelSearch(440, 603, 694, 605, Hex(0x603818, 6)) ;Finds Train Troops button
 		If IsArray($TrainPos) = False Then
 			SetLog("Dark Barrack " & $i + 1 & " is not available", $COLOR_RED)
 			If _Sleep(500) Then ExitLoop

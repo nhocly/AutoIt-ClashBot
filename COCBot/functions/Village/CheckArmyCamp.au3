@@ -13,25 +13,21 @@ Func CheckArmyCamp()
 		Click($ArmyPos[0], $ArmyPos[1]) ;Click Army Camp
 	EndIf
 
-	_CaptureRegion()
-	If _Sleep(500) Then Return
-	Local $BArmyPos = _PixelSearch(309, 581, 433, 583, Hex(0x4084B8, 6), 5) ;Finds Info button
+	Local $BArmyPos = _WaitForPixelSearch(309, 581, 433, 583, Hex(0x4084B8, 6)) ;Finds Info button
 	If IsArray($BArmyPos) = False Then
 		SetLog("Your Army Camp is not available", $COLOR_RED)
 	Else
 		Click($BArmyPos[0], $BArmyPos[1]) ;Click Info button
-		If _Sleep(2000) Then Return
-
-		_CaptureRegion()
+		Local $Campbar = 0
 		Switch $icmbRaidcap
 			Case 0 ; 70%
-				Local $Campbar = _PixelSearch(620, 210, 622, 213, Hex(0x37A800, 6), 5)
+				$Campbar = _WaitForPixelSearch(620, 210, 622, 213, Hex(0x37A800, 6))
 			Case 1 ; 80%
-				Local $Campbar = _PixelSearch(649, 210, 651, 213, Hex(0x37A800, 6), 5)
+				$Campbar = _WaitForPixelSearch(649, 210, 651, 213, Hex(0x37A800, 6))
 			Case 2 ; 90%
-				Local $Campbar = _PixelSearch(677, 210, 679, 213, Hex(0x37A800, 6), 5)
+				$Campbar = _WaitForPixelSearch(677, 210, 679, 213, Hex(0x37A800, 6))
 			Case 3 ; 100%
-				Local $Campbar = _PixelSearch(707, 210, 709, 213, Hex(0x37A800, 6), 5)
+				$Campbar = _WaitForPixelSearch(707, 210, 709, 213, Hex(0x37A800, 6))
 		EndSwitch
 		$CurCamp = Number(getOther(586, 193, "Camp"))
 		If $CurCamp > 0 Then

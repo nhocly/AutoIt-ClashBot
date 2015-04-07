@@ -8,9 +8,7 @@ Func RequestCC()
 		While 1
 			SetLog("Requesting for Clan Castle's Troops", $COLOR_BLUE)
 			Click($CCPos[0], $CCPos[1])
-			If _Sleep(1000) Then ExitLoop
-			_CaptureRegion()
-			$RequestTroop = _PixelSearch(310, 580, 553, 622, Hex(0x608C90, 6), 10)
+			$RequestTroop = _WaitForPixelSearch(320, 601, 540, 605, Hex(0x608C90, 6), 10)
 			If IsArray($RequestTroop) Then
 				Click($RequestTroop[0], $RequestTroop[1])
 				If _WaitForPixel(340, 245, Hex(0xCC4010, 6), 20) Then

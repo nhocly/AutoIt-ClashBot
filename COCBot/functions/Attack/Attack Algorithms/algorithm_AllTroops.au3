@@ -263,18 +263,18 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 	SetLog("Dropping left over troops", $COLOR_BLUE)
 	For $x = 0 To 1
 		PrepareAttack(True) ;Check remaining quantities
-		For $i = $eBarbarian To $eMinion ; lauch all remaining troops
-			If $i = $eBarbarian Or $i = $eArcher Or $i = $eMinion Or $i = $eHog Or $i = $eValkyrie Then
+		For $i = $eBarbarian To $eArcher ; launch all remaining troops
+			If $i = $eBarbarian Or $i = $eArcher Then
 				LaunchTroop($i, $nbSides, 0, 1)
-;			Else
-;				LaunchTroop($i, $nbSides, 0, 1, 2)
+			Else
+				LaunchTroop($i, $nbSides, 0, 1, 2)
 			EndIf
 			If _Sleep(500, False) Then Return
 		Next
 	Next
 
 	;Activate KQ's power
-	If $checkKPower Or $checkQPower Then
+	If ($checkKPower Or $checkQPower) and $iSkillActivateCond = 0 Then
 		If $itxtKingSkill < $itxtQueenSkill Then
 			If $checkKPower Then
 			    SetLog("Waiting " & $itxtKingSkill & " seconds before activating King's abilities", $COLOR_ORANGE)
@@ -328,5 +328,51 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 			EndIf
 		EndIf
 	EndIf
+
+	;Activate KQ's power
+	If ($checkKPower Or $checkQPower) and $iSkillActivateCond = 1 Then
+		Local $var = False, $varQueen = False, $varKing = False, $PositionKing, $PositionQueen, $HealthQueen, $HealthKing
+		Local $SkillTimer = TimerInit()
+		While $var = False
+			If $checkKPower and $varKing = False Then
+				$PositionKing = 47 + (72 * $King)
+				$HealthKing = _WaitForPixelSearch($PositionKing, 555, $PositionKing + 20, 555, Hex(0xE5101F, 6), 5, 200) ;Finds Health
+				If IsArray($HealthKing) = True Then
+					SetLog("Activate King's power", $COLOR_BLUE)
+					SelectDropTroupe($King)
+					$varKing = True
+				EndIf
+			EndIf
+			If $checkQPower and $varQueen = False Then
+				$PositionQueen = 47 + (72 * $Queen)
+				$HealthQueen = _WaitForPixelSearch($PositionQueen, 555, $PositionQueen + 20, 555, Hex(0xE5101F, 6), 5, 200) ;Finds Health
+				If IsArray($HealthQueen) = True Then
+					SetLog("Activate Queen's power", $COLOR_BLUE)
+					SelectDropTroupe($Queen)
+					$varQueen = True
+				EndIf
+			EndIf
+			If $checkKPower and $checkQPower And $varKing And $varQueen Then
+				$var = True
+			ElseIf $checkKPower and $varKing And $checkQPower = False Then
+				$var = True
+			ElseIf $checkQPower and $varQueen And $checkKPower = False Then
+				$var = True
+			EndIf
+			;If it is 60secs and for some reason $var was never set then exit this loop
+			if TimerDiff($SkillTimer) > 60000 Then
+				If $checkKPower and $varKing = False Then
+					SetLog("Activate King's power", $COLOR_BLUE)
+					SelectDropTroupe($King)
+				EndIf
+				If $checkQPower and $varQueen = False Then
+				    SetLog("Activate Queen's power", $COLOR_BLUE)
+					SelectDropTroupe($Queen)
+				EndIf
+				$var = True
+			EndIf
+		Wend
+	EndIf
+
 	SetLog("~Finished Attacking, waiting to finish", $COLOR_GREEN)
 EndFunc   ;==>algorithm_AllTroops

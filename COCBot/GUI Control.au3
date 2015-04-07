@@ -20,10 +20,7 @@ Func GUIControl($hWind, $iMsg, $wParam, $lParam)
 		Case 273
 			Switch $nID
 				Case $GUI_EVENT_CLOSE
-					_GDIPlus_Shutdown()
-					_GUICtrlRichEdit_Destroy($txtLog)
-					SaveConfig()
-					Exit
+					btnExit()
 				Case $btnStop
 					If $RunState Then btnStop()
 				Case $btnAtkNow
@@ -36,7 +33,7 @@ Func GUIControl($hWind, $iMsg, $wParam, $lParam)
 					chkRequest()
 				Case $tabMain
 					tabMain()
-				Case $Randomspeedatk
+				Case $chkRandomSpeedAtk
 					Randomspeedatk()
 				Case $chkNoAttack
 					If GUICtrlRead($chkNoAttack) = $GUI_CHECKED Then
@@ -50,8 +47,17 @@ Func GUIControl($hWind, $iMsg, $wParam, $lParam)
 					If GUICtrlRead($chkMeetGE) = $GUI_UNCHECKED Then
 						GUICtrlSetState($chkSpellDarkStorage, $GUI_UNCHECKED)
 						GUICtrlSetState($chkSpellDarkStorage, $GUI_DISABLE)
+						GUICtrlSetState($chkMultiLight, $GUI_UNCHECKED)
+						GUICtrlSetState($chkMultiLight, $GUI_DISABLE)
 					ElseIf GUICtrlRead($chkMeetGE) = $GUI_CHECKED Then
 						GUICtrlSetState($chkSpellDarkStorage, $GUI_ENABLE)
+					EndIf
+				Case $chkSpellDarkStorage
+					If GUICtrlRead($chkSpellDarkStorage) = $GUI_UNCHECKED Then
+						GUICtrlSetState($chkMultiLight, $GUI_UNCHECKED)
+						GUICtrlSetState($chkMultiLight, $GUI_DISABLE)
+					ElseIf GUICtrlRead($chkSpellDarkStorage) = $GUI_CHECKED Then
+						GUICtrlSetState($chkMultiLight, $GUI_ENABLE)
 					EndIf
 			EndSwitch
 		Case 274
@@ -72,7 +78,7 @@ Func SetTime()
 EndFunc   ;==>SetTime
 
 Func SetTimeRC()
-    if GUICtrlRead($lblpushbulletenabled) = $GUI_CHECKED and GUICtrlRead($lblpushbulletremote) = $GUI_CHECKED Then
+    if GUICtrlRead($chkPushBulletEnabled) = $GUI_CHECKED and GUICtrlRead($chkPushBulletRemote) = $GUI_CHECKED Then
 		  _RemoteControl()
 	EndIf
 EndFunc   ;==>SetTime
@@ -181,7 +187,7 @@ Func Check()
 EndFunc   ;==>Check
 
 Func btnStart()
-	If GUICtrlRead($lblpushbulletenabled) = $GUI_CHECKED and GUICtrlRead($pushbullettokenvalue) = "" Then
+	If GUICtrlRead($chkPushBulletEnabled) = $GUI_CHECKED and GUICtrlRead($txtPushBulletTokenValue) = "" Then
 		SetLog ("Please set PushBullet account token")
 		Return
 	EndIf
@@ -421,11 +427,19 @@ Func btnSearchMode()
 
 		GUICtrlSetState($btnLocateBarracks, $GUI_DISABLE)
 		GUICtrlSetState($btnLocateDarkBarracks, $GUI_DISABLE)
+		GUICtrlSetState($btnLocateTownHall, $GUI_DISABLE)
+		GUICtrlSetState($btnLocateKingAltar, $GUI_DISABLE)
+		GUICtrlSetState($btnLocateQueenAltar, $GUI_DISABLE)
+		GUICtrlSetState($btnLocateCamp, $GUI_DISABLE)
+		GUICtrlSetState($btnLocateSFactory, $GUI_DISABLE)
+		GUICtrlSetState($btnLocateUp1, $GUI_DISABLE)
+		GUICtrlSetState($btnLocateUp2, $GUI_DISABLE)
+		GUICtrlSetState($btnLocateUp3, $GUI_DISABLE)
+		GUICtrlSetState($btnFindWall, $GUI_DISABLE)
 		GUICtrlSetState($btnSearchMode, $GUI_DISABLE)
 		GUICtrlSetState($cmbTroopComp, $GUI_DISABLE)
 		GUICtrlSetState($chkBackground, $GUI_DISABLE)
-		;GUICtrlSetState($btnLocateCollectors, $GUI_DISABLE)
-
+		GUICtrlSetState($chkForceBS, $GUI_DISABLE)
 		$RunState = True
 		VillageSearch()
 		$RunState = False
@@ -435,10 +449,19 @@ Func btnSearchMode()
 
 		GUICtrlSetState($btnLocateBarracks, $GUI_ENABLE)
 		GUICtrlSetState($btnLocateDarkBarracks, $GUI_ENABLE)
+		GUICtrlSetState($btnLocateTownHall, $GUI_ENABLE)
+		GUICtrlSetState($btnLocateKingAltar, $GUI_ENABLE)
+		GUICtrlSetState($btnLocateQueenAltar, $GUI_ENABLE)
+		GUICtrlSetState($btnLocateCamp, $GUI_ENABLE)
+		GUICtrlSetState($btnLocateSFactory, $GUI_ENABLE)
+		GUICtrlSetState($btnLocateUp1, $GUI_ENABLE)
+		GUICtrlSetState($btnLocateUp2, $GUI_ENABLE)
+		GUICtrlSetState($btnLocateUp3, $GUI_ENABLE)
+		GUICtrlSetState($btnFindWall, $GUI_ENABLE)
 		GUICtrlSetState($btnSearchMode, $GUI_ENABLE)
 		GUICtrlSetState($cmbTroopComp, $GUI_ENABLE)
 		GUICtrlSetState($chkBackground, $GUI_ENABLE)
-		;GUICtrlSetState($btnLocateCollectors, $GUI_ENABLE)
+		GUICtrlSetState($chkForceBS, $GUI_ENABLE)
 		ExitLoop
 	WEnd
 EndFunc   ;==>btnSearchMode
@@ -871,7 +894,7 @@ EndFunc   ;==>chkBackground
 
 Func chkNoAttack()
 	If GUICtrlRead($chkNoAttack) = $GUI_CHECKED Then
-	   if GUICtrlRead($lblpushbulletenabled) = $GUI_CHECKED Then
+	   if GUICtrlRead($chkPushBulletEnabled) = $GUI_CHECKED Then
 		  SetLog("Please disable PushBullet if you intend to use donate only mode")
 		  GUICtrlSetState($chkNoAttack, $GUI_UNCHECKED)
 	   else
@@ -879,7 +902,7 @@ Func chkNoAttack()
 		SetLog("~~~Donate / Train Only Activated~~~", $COLOR_PURPLE)
 		EndIf
 	 ElseIf GUICtrlRead($chkDonateOnly) = $GUI_CHECKED Then
-		 if GUICtrlRead($lblpushbulletenabled) = $GUI_CHECKED Then
+		 if GUICtrlRead($chkPushBulletEnabled) = $GUI_CHECKED Then
 		 SetLog("Please disable PushBullet if you intend to do donate only mode")
 		 GUICtrlSetState($chkDonateOnly, $GUI_UNCHECKED)
 		 else
@@ -912,7 +935,7 @@ Func chkRequest()
 EndFunc   ;==>chkRequest
 
 Func Randomspeedatk()
-	If GUICtrlRead($Randomspeedatk) = $GUI_CHECKED Then
+	If GUICtrlRead($chkRandomSpeedAtk) = $GUI_CHECKED Then
 		$iRandomspeedatk = 1
 		GUICtrlSetState($cmbUnitDelay, $GUI_DISABLE)
 		GUICtrlSetState($cmbWaveDelay, $GUI_DISABLE)
@@ -930,6 +953,13 @@ Func tabMain()
 		ControlHide("", "", $txtLog)
 	EndIf
 EndFunc   ;==>tabMain
+
+Func btnExit()
+	_GDIPlus_Shutdown()
+	_GUICtrlRichEdit_Destroy($txtLog)
+	SaveConfig()
+	Exit
+EndFunc   ;==>btnExit
 
 Func DisableBS($HWnD, $iButton)
 	ConsoleWrite('+ Window Handle: ' & $HWnD & @CRLF)

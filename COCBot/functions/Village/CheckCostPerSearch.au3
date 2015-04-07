@@ -12,16 +12,14 @@ Func CheckCostPerSearch()
 
 	ClickP($TopLeftClient) ;Click Away
 	If _Sleep(500) Then Return
-
 	Click($TownHallPos[0], $TownHallPos[1]) ; Click Townhall
-	If _Sleep(500) Then Return
 
-	Local $Info = _PixelSearch(240, 550, 484, 650, Hex(0x4084B8, 6), 5) ;Finds Info button
+	Local $Info = _WaitForPixelSearch(240, 581, 484, 583, Hex(0x4084B8, 6)) ;Finds Info button
 	If IsArray($Info) = False Then
-	  SetLog("Townhall Info Button is not available", $COLOR_RED)
-	  If _Sleep(500) Then Return
+		SetLog("Townhall Info Button is not available", $COLOR_RED)
+		If _Sleep(500) Then Return
 	Else
-	  Click($Info[0], $Info[1]) ;Click Info Button
+		Click($Info[0], $Info[1]) ;Click Info Button
 
 		If _Sleep(800) Then Return
 		Local $THLevel = getOther(495, 136, "Townhall")

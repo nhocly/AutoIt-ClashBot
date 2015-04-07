@@ -90,13 +90,10 @@ Func Train()
 		If _Sleep(500) Then ExitLoop
 
 		ClickP($TopLeftClient) ;Click Away
-
 		If _Sleep(500) Then ExitLoop
-
 		Click($barrackPos[$i][0], $barrackPos[$i][1]) ;Click Barrack
-		If _Sleep(500) Then ExitLoop
 
-		Local $TrainPos = _PixelSearch(155, 603, 694, 605, Hex(0x603818, 6), 5) ;Finds Train Troops button
+		Local $TrainPos = _WaitForPixelSearch(440, 603, 694, 605, Hex(0x603818, 6)) ;Finds Train Troops button
 		If IsArray($TrainPos) = False Then
 			SetLog("Barrack " & $i + 1 & " is not available", $COLOR_RED)
 			handleBarracksError($i)
@@ -161,7 +158,7 @@ Func Train()
 			Else ; Custom Troops
 				SetLog("====== Barrack " & $i + 1 & " : ======", $COLOR_BLUE)
 				_CaptureRegion()
-				If $fullArmy Or $FirstStart Then
+				If $fullArmy Then
 					;While _WaitForPixel(496, 200, Hex(0x880000, 6), 20, 500, 10)
 					Click(496, 190, 80, 2)
 					;WEnd

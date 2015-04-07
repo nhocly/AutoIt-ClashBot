@@ -116,12 +116,14 @@ Func readConfig() ;Reads config and sets it to the variables
 		$ichkDonateOnly = IniRead($config, "general", "DonateOnly", "0")
 
 		;Misc Settings--------------------------------------------------------------------------
+		$iSkillActivateCond = IniRead($config, "misc", "skillactivate", "0")
 		$itxtReconnect = IniRead($config, "misc", "reconnectdelay", "0")
 		$itxtReturnh = IniRead($config, "misc", "returnhomedelay", "0")
 		$itxtKingSkill = IniRead($config, "misc", "kingskilldelay", "0")
 		$itxtQueenSkill = IniRead($config, "misc", "queenskilldelay", "0")
 		$itxtSpellDarkStorage = IniRead($config, "misc", "SpellDark", "0")
 		$SpellDarkStorage = IniRead($config, "misc", "SpellDarkStorage", "0")
+		$ichkMultiLight = IniRead($config, "misc", "MultiLightning", "0")
 		$icmbSearchsp = IniRead($config, "misc", "searchspd", "0")
 		$ichkTrap = IniRead($config, "misc", "chkTrap", "0")
 		$TownHallPos[0] = IniRead($config, "misc", "xTownHall", "-1")
@@ -140,6 +142,7 @@ Func readConfig() ;Reads config and sets it to the variables
 		$ichkBoostRax4 = IniRead($config, "misc", "BoostRax4", "0")
 		$ichkBoostKing = IniRead($config, "misc", "BoostKing", "0")
 		$ichkBoostQueen = IniRead($config, "misc", "BoostQueen", "0")
+		$ichkBoostSpell = IniRead($config, "misc", "BoostSpell", "0")
 		;Push Bullet--------------------------------------------------------------------------
 		$PushBulletEnabled = IniRead($config, "notification", "pushbullet", "0")
 		$PushBullettoken = IniRead($config, "notification", "accounttoken", "")

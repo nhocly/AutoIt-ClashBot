@@ -1,6 +1,6 @@
 ;Returns home when in battle, will take screenshot and check for gold/elixir change unless specified not to.
 
-Func ReturnHome($TakeLootSnapShot = 1, $GoldChangeCheck = True) ;Return main screen
+Func ReturnHome($TakeSS = 1, $GoldChangeCheck = True) ;Return main screen
 	If $GoldChangeCheck = True Then
 ;		If $checkKPower Or $checkQPower Then
 ;			If _Sleep(15000 - $delayActivateKQ) Then Return
@@ -21,7 +21,7 @@ Func ReturnHome($TakeLootSnapShot = 1, $GoldChangeCheck = True) ;Return main scr
 	Click(512, 394) ;Click Confirm
 	If _Sleep(750) Then Return
 
-	If $TakeLootSnapShot = 1 Then
+	If $TakeSS = 1 Then
 		If _Sleep(2000) Then Return
 		SetLog("Taking snapshot of your loot", $COLOR_ORANGE)
 		Local $Date = @MDAY & "." & @MON & "." & @YEAR

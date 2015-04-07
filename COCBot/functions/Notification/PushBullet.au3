@@ -24,7 +24,7 @@ Func _RemoteControl()
 
 			if $title[$x] = "bot help" Then
 			   SetLog("Your request has been received. Help has been sent")
-			   _Push("Request for Help","You can remotely control your bot using the following command format\n\nBot <command> where <command> is:\n\nPause - pause the bot\nResume - resume the bot\nStats - send bot current statistics\nLogs - send the current log file\nBot Boost1 - Boost 1 barrack\nBot Boost2 - Boost 2 barracks\Bot Boost3 - Boost 3 barracks\nBot BoostAll - Boost all barracks\nHelp - send this help message\n\nEnter the command in the title of the message")
+			   _Push("Request for Help","You can remotely control your bot using the following command format\n\nBot <command> where <command> is:\n\nPause - pause the bot\nResume - resume the bot\nStats - send bot current statistics\nLogs - send the current log file\nBoost1 - Boost 1 barrack\nBoost2 - Boost 2 barracks\nBoost3 - Boost 3 barracks\nBoostAll - Boost all barracks\nHelp - send this help message\n\nEnter the command in the title of the message")
 			   _DeleteMessage($iden[$x])
 			Elseif $title[$x] = "bot pause" Then
 			    If $PauseBot = False Then
@@ -173,7 +173,7 @@ Func _PushFile($File, $Folder, $FileType, $title, $body)
 		$result=runwait(@ScriptDir & "\curl\curl.exe -i -X POST " & $upload_url[0] & ' -F awsaccesskeyid="' & $awsaccesskeyid[0] & '" -F acl="' & $acl[0] & '" -F key="' & $key[0] & '" -F signature="' & $signature[0] & '" -F policy="' & $policy[0] & '" -F content-type="' & $FileType & '" -F file=@"' & @ScriptDir & '\' & $Folder & '\' & $File & '" -o "' & @ScriptDir & '\logs\curl.log"',"",@SW_HIDE)
 	EndIf
 
-	if GUICtrlRead($lblpushbulletdebug) = $GUI_CHECKED Then
+	if GUICtrlRead($chkPushBulletDebug) = $GUI_CHECKED Then
 	   SetLog('=========================================================================')
 	   SetLog($Result)
 	   SetLog($upload_url[0])
@@ -206,12 +206,12 @@ Func _PushFile($File, $Folder, $FileType, $title, $body)
 	   $oHTTP.Send($pPush)
 	   $Result = $oHTTP.ResponseText
     Else
-	   if GUICtrlRead($lblpushbulletdebug) = $GUI_CHECKED Then
+	   if GUICtrlRead($chkPushBulletDebug) = $GUI_CHECKED Then
 		  SetLog($hFileOpen)
 		  SetLog("There is an error and file was not uploaded")
 	   EndIf
     EndIf
-    if GUICtrlRead($lblpushbulletdebug) = $GUI_CHECKED Then
+    if GUICtrlRead($chkPushBulletDebug) = $GUI_CHECKED Then
 	   SetLog($Result)
 	   SetLog("You can paste this in the forum so we can check whether it is PushBullet problem or mine")
 	   SetLog('=========================================================================')
